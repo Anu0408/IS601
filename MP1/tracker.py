@@ -67,7 +67,8 @@ def add_task(name: str, description: str, due: str):
     else:
         print("Failed to add task due to missing data.")
     save()
-
+    # UCID: ac298; date: 02/19/23
+     
 def process_update(index):
     """ extracted the user input prompts to get task data then passes it to update_task() """
     if index >= len(tasks):
@@ -77,16 +78,14 @@ def process_update(index):
     print(f"Update Task {task['name']}:")
     name = input(f"What's the name of this task? ({task['name']}) \n").strip() or task['name']
     desc = input(f"What's a brief descriptions of this task? ({task['description']}) \n").strip() or task['description']
-    due = input(f"When is this task due (format: m/d/y H:M:S) ({task['due']}) \n").strip() or task['due']
+    due = input(f"When is this task due (format: mm/dd/yy HH:MM:SS) ({task['due']}) \n").strip() or task['due']
     update_task(index, name=name, description=desc, due=due)
-
+# UCID: ac298; date: 02/19/23
 
 def update_task(index: int, name: str = None, description:str = None, due: str = None):
     """ 
-    Updates the name, description , due date of a task found by index if an update to the property was provided 
+    Updates the name, description, and due date of a task found by index if an update to the property was provided 
     """
-    tasks = load()
-
     if index >= len(tasks) or index < 0:
         print("Invalid index. Please enter a number within range.")
         return
@@ -96,40 +95,40 @@ def update_task(index: int, name: str = None, description:str = None, due: str =
     if description is not None:
         tasks[index]['description'] = description
     if due is not None:
-        tasks[index]['due'] = due
+        tasks[index]['due'] = str_to_datetime(due)
 
-    tasks[index]['lastActivity'] = str(datetime.datetime.now())
+    tasks[index]['lastActivity'] = datetime.now()
 
     if name is None and description is None and due is None:
-        print("Task was not updated")
+        print("Task was not  updated")
     else:
         print("Task updated")
-
-    save(tasks)
+    save()
+# UCID: ac298; date: 02/19/23
 
 def mark_done(index):
     """ 
     Updates a single task, via index, to a done datetime 
     """
-    tasks = load()
+    global tasks
 
     if index >= len(tasks) or index < 0:
         print("Invalid index. Please enter a number within range.")
         return
 
-    if 'done' in tasks[index] and tasks[index]['done'] is not None:
+    if tasks[index]['done'] is not None:
         print("Task already completed")
     else:
-        tasks[index]['done'] = str(datetime.datetime.now())
+        tasks[index]['done'] = datetime.now()
         print("Task marked as done")
-
-    save(tasks)
+        save()
+        
 
 def view_task(index):
     """ 
     View more info about a specific task fetch by index 
     """
-    tasks = load()
+    global tasks
 
     if index >= len(tasks) or index < 0:
         print("Invalid index. Please enter a number within range.")
@@ -137,45 +136,64 @@ def view_task(index):
 
     task = tasks[index]
     completed = task.get('done', "-")
-    done = 'x' if completed != "-" else ' '
-    
-    print(f"""[{done}] Task: {task['name']}
-    Description: {task['description']}
-    Last Activity: {task['lastActivity']}
-    Due: {task['due']}
-    Completed: {completed}""")
+    print(f"Name: {task['name']}")
+    print(f"Description: {task['description']}")
+    print(f"Due date: {task['due']}")
+    print(f"Done: {'Yes' if completed != '-' else 'No'} ({completed})")
+    return task
+
+# UCID: ac298; date: 02/21/23
+
 
 def delete_task(index):
-    """ 
-    Deletes a task from the tasks list by index 
-    """
-    tasks = load()
+    """Deletes a task from the tasks list by index"""
+    try:
+        global tasks
 
-    if index >= len(tasks) or index < 0:
-        print("Invalid index. Please enter a number within range.")
-        return
+        if index < 0 or index >= len(tasks):
+            print("Error: Invalid index. Please enter a number within range.")
+            return
 
-    tasks.pop(index)
+        del tasks[index]
 
-    print("Task deleted")
+        save()
 
-    save(tasks)
+        print("Task deleted successfully.")
+
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+# UCID: ac298; date: 02/20/23
 
 def get_incomplete_tasks():
     """ 
     Prints a list of tasks that are not done 
     """
     tasks = load()
+    if tasks is None:
+        print("No tasks found.")
+        return
     incomplete_tasks = [task for task in tasks if task.get('done') is None]
+    if not incomplete_tasks:
+        print("All tasks are done.")
+        return
     list_tasks(incomplete_tasks)
 
+# UCID: ac298; date: 02/20/23
+
+
 def get_overdue_tasks():
-    """ 
-    Prints a list of tasks that are over due completion (not done and expired) 
-    """
+    """ prints a list of tasks that are over due completion (not done and expired) """
     tasks = load()
+    if tasks is None:
+        print("No tasks found.")
+        return
     overdue_tasks = [task for task in tasks if task.get('done') is None and datetime.datetime.now() > datetime.datetime.strptime(task['due'], '%Y-%m-%d %H:%M:%S.%f')]
     list_tasks(overdue_tasks)
+
+
+# UCID: ac298; date: 02/21/23
 
 
 def get_time_remaining(index, tasks):
@@ -213,6 +231,10 @@ def get_time_remaining(index, tasks):
         print(f"{message} {days} days, {hours} hours, {minutes} minutes, {seconds} seconds until the task is due.")
         
 command_list = ["add", "view", "update", "list", "incomplete", "overdue", "delete", "remaining", "help", "quit", "exit", "done"]
+
+
+# UCID: ac298; date: 02/20/23
+
 def print_options():
     """ prints a readable list of commands that can be typed when prompted """
     print("Choices")
@@ -227,6 +249,8 @@ def print_options():
     print("done - marks a task complete by number")
     print("quit or exit - terminates the program")
     print("help - shows this list again")
+# UCID: ac298; date: 02/20/23
+
 
 def run():
     """ runs the program until terminated or a quit/exit command is used """
@@ -276,4 +300,4 @@ def run():
         
 #if __name__ == "__main__":
 run()
-
+# UCID: ac298; date: 02/20/23

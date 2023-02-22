@@ -77,7 +77,7 @@ def process_update(index):
     print(f"Update Task {task['name']}:")
     name = input(f"What's the name of this task? ({task['name']}) \n").strip() or task['name']
     desc = input(f"What's a brief descriptions of this task? ({task['description']}) \n").strip() or task['description']
-    due = input(f"When is this task due (format: m/d/y H:M:S) ({task['due']}) \n").strip() or task['due']
+    due = input(f"When is this task due (format: mm/dd/yy HH:MM:SS) ({task['due']}) \n").strip() or task['due']
     update_task(index, name=name, description=desc, due=due)
 
 

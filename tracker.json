@@ -1,9 +1,65 @@
 [
     {
-        "name": "zfy",
-        "due": "2023-02-22 02:00:00",
-        "lastActivity": "2023-02-20 22:03:46.722117",
-        "description": "xyz",
+        "name": "school",
+        "due": "2023-02-22 10:00:00",
+        "lastActivity": "2023-02-21 21:14:17.706358",
+        "description": "group discussion at 10 am",
+        "done": false
+    },
+    {
+        "name": "anupama",
+        "due": "2023-03-03 05:00:00",
+        "lastActivity": "2023-02-21 20:24:20.865384",
+        "description": "hii",
+        "done": false
+    },
+    {
+        "name": "reschedule the meeting",
+        "due": "2023-02-22 12:00:00",
+        "lastActivity": "2023-02-21 21:07:14.443990",
+        "description": "tommorrow the meeting is rescheduled at 12 pm",
+        "done": false
+    },
+    {
+        "name": "quiz",
+        "due": "2023-02-23 11:59:00",
+        "lastActivity": "2023-02-21 21:34:11.957082",
+        "description": "multiple attempts",
+        "done": false
+    },
+    {
+        "name": "paper writing",
+        "due": "2023-02-25 11:59:00",
+        "lastActivity": "2023-02-21 21:33:16.669832",
+        "description": "complete the task before deadline",
+        "done": false
+    },
+    {
+        "name": "EDM class",
+        "due": "2023-02-25 04:00:00",
+        "lastActivity": "2023-02-21 21:55:00.660010",
+        "description": "tomorrow at 4 pm sharply",
+        "done": false
+    },
+    {
+        "name": "abcd",
+        "due": "2023-02-23 09:00:00",
+        "lastActivity": "2023-02-21 22:18:02.506219",
+        "description": "pre-nursuring",
+        "done": false
+    },
+    {
+        "name": "singing class",
+        "due": "2023-02-27 11:00:00",
+        "lastActivity": "2023-02-21 22:51:39.031460",
+        "description": "the class is scheduled at 11 am everyday",
+        "done": false
+    },
+    {
+        "name": "maths",
+        "due": "2024-01-22 02:00:00",
+        "lastActivity": "2023-02-21 22:50:18.334215",
+        "description": "add. sub. div, mul",
         "done": false
     }
 ]
