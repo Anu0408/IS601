@@ -62,7 +62,7 @@ def add_task(name: str, description: str, due: str):
         task['name'] = name
         task['description'] = description
         task['due'] = str_to_datetime(due)
-        tasks.append(task)
+        tasks.a+ppend(task)
         print(f"Task {name} added successfully!")
     else:
         print("Failed to add task due to missing data.")
@@ -135,11 +135,15 @@ def view_task(index):
         return
 
     task = tasks[index]
-    completed = task.get('done', "-")
+    completed
+    if tasks[index]['done'] is not None:
+        completed=True
+    else:
+        completed=False
     print(f"Name: {task['name']}")
     print(f"Description: {task['description']}")
     print(f"Due date: {task['due']}")
-    print(f"Done: {'Yes' if completed != '-' else 'No'} ({completed})")
+    print(f"Done: {'Yes' if completed else 'No'} ({completed})")
     return task
 
 # UCID: ac298; date: 02/21/23
@@ -167,48 +171,55 @@ def delete_task(index):
 # UCID: ac298; date: 02/20/23
 
 def get_incomplete_tasks():
-    """ 
-    Prints a list of tasks that are not done 
-    """
-    tasks = load()
-    if tasks is None:
-        print("No tasks found.")
-        return
-    incomplete_tasks = [task for task in tasks if task.get('done') is None]
-    if not incomplete_tasks:
-        print("All tasks are done.")
-        return
-    list_tasks(incomplete_tasks)
+    """ prints a list of tasks that are not done """
+    incomplete_tasks = [t for t in tasks if not t['done']]
+    return list_tasks(incomplete_tasks)
+    # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
+    # UCID: abc123, DATE: 2023-02-23
+    # Used a list comprehension to generate a list of incomplete tasks by checking if the 'done' key is False.
+
 
 # UCID: ac298; date: 02/20/23
 
 
+
 def get_overdue_tasks():
     """ prints a list of tasks that are over due completion (not done and expired) """
-    tasks = load()
-    if tasks is None:
-        print("No tasks found.")
-        return
-    overdue_tasks = [task for task in tasks if task.get('done') is None and datetime.datetime.now() > datetime.datetime.strptime(task['due'], '%Y-%m-%d %H:%M:%S.%f')]
-    list_tasks(overdue_tasks)
+    now = datetime.datetime.now()
+    overdue_tasks = [t for t in tasks if not t['done'] and t['due'] is not None and t['due'] < now]
+    return list_tasks(overdue_tasks)
+    # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
+    # UCID: abc123, DATE: 2023-02-23
+    # Used a list comprehension to generate a list of overdue tasks by checking if the 'done' key is False and the 'due' key is older than the current time.
+
 
 
 # UCID: ac298; date: 02/21/23
 
 
-def get_time_remaining(index, tasks):
+
+import datetime
+
+def get_time_remaining(index, tasks, command_list):
     """
     Outputs the number of days, hours, minutes, seconds a task has before it's overdue
     otherwise shows similar info for how far past due it is.
 
     :param index: int, the index of the task to check
     :param tasks: list, a list of dictionaries containing the tasks and their due dates
+    :param command_list: list, a list of available commands
     """
-    if index < 0 or index >= len(tasks):
-        print("Invalid index. Please provide an index within the range of tasks.")
-        return
+    def get_task(index, tasks):
+        if index < 0 or index >= len(tasks):
+            print("Invalid index. Please provide an index within the range of tasks.")
+            return None
+        return tasks[index]
     
-    task = tasks[index]
+    task = get_task(index, tasks)
+    if task:
+        print(task)
+
+
     due_date = datetime.datetime.strptime(task["due_date"], "%Y-%m-%d %H:%M:%S")
     now = datetime.datetime.now()
     time_diff = due_date - now
@@ -229,8 +240,12 @@ def get_time_remaining(index, tasks):
         print(f"{message} {days} days, {hours} hours, {minutes} minutes, {seconds} seconds")
     else:
         print(f"{message} {days} days, {hours} hours, {minutes} minutes, {seconds} seconds until the task is due.")
-        
+
+# Example usage
 command_list = ["add", "view", "update", "list", "incomplete", "overdue", "delete", "remaining", "help", "quit", "exit", "done"]
+tasks = [{"name": "task1", "due_date": "2023-03-01 12:00:00"}, {"name": "task2", "due_date": "2023-03-02 12:00:00"}]
+
+get_time_remaining(0, tasks, command_list)
 
 
 # UCID: ac298; date: 02/20/23
