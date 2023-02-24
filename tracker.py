@@ -67,6 +67,7 @@ def add_task(name: str, description: str, due: str):
     else:
         print("Failed to add task due to missing data.")
     save()
+#UCID: ac298; date: 02/19/23;
 
 def process_update(index):
     """ extracted the user input prompts to get task data then passes it to update_task() """
@@ -79,13 +80,13 @@ def process_update(index):
     desc = input(f"What's a brief descriptions of this task? ({task['description']}) \n").strip() or task['description']
     due = input(f"When is this task due (format: mm/dd/yy HH:MM:SS) ({task['due']}) \n").strip() or task['due']
     update_task(index, name=name, description=desc, due=due)
-
+#UCID: ac298; date: 02/19/23;
 
 def update_task(index: int, name: str = None, description:str = None, due: str = None):
     """ 
     Updates the name, description , due date of a task found by index if an update to the property was provided 
     """
-    tasks = load()
+    
 
     if index >= len(tasks) or index < 0:
         print("Invalid index. Please enter a number within range.")
@@ -98,38 +99,40 @@ def update_task(index: int, name: str = None, description:str = None, due: str =
     if due is not None:
         tasks[index]['due'] = due
 
-    tasks[index]['lastActivity'] = str(datetime.datetime.now())
+    tasks[index]['lastActivity'] = str(datetime.now())
 
     if name is None and description is None and due is None:
         print("Task was not updated")
     else:
         print("Task updated")
 
-    save(tasks)
+    save()
+#UCID: ac298; date: 02/19/23;
 
 def mark_done(index):
     """ 
     Updates a single task, via index, to a done datetime 
     """
-    tasks = load()
+   
 
     if index >= len(tasks) or index < 0:
         print("Invalid index. Please enter a number within range.")
         return
 
-    if 'done' in tasks[index] and tasks[index]['done'] is not None:
+    if 'done' in tasks[index] and tasks[index]['done'] is not False :
         print("Task already completed")
     else:
-        tasks[index]['done'] = str(datetime.datetime.now())
+        tasks[index]['done'] = str(datetime.now())
         print("Task marked as done")
 
-    save(tasks)
+    save()
+#UCID: ac298; date: 02/19/23;
 
 def view_task(index):
     """ 
     View more info about a specific task fetch by index 
     """
-    tasks = load()
+    
 
     if index >= len(tasks) or index < 0:
         print("Invalid index. Please enter a number within range.")
@@ -144,12 +147,13 @@ def view_task(index):
     Last Activity: {task['lastActivity']}
     Due: {task['due']}
     Completed: {completed}""")
+#UCID: ac298; date: 02/19/23;
+
 
 def delete_task(index):
     """ 
     Deletes a task from the tasks list by index 
     """
-    tasks = load()
 
     if index >= len(tasks) or index < 0:
         print("Invalid index. Please enter a number within range.")
@@ -159,26 +163,31 @@ def delete_task(index):
 
     print("Task deleted")
 
-    save(tasks)
+    save()
+#UCID: ac298; date: 02/19/23;
+
 
 def get_incomplete_tasks():
     """ 
     Prints a list of tasks that are not done 
     """
-    tasks = load()
-    incomplete_tasks = [task for task in tasks if task.get('done') is None]
+    
+    incomplete_tasks = [task for task in tasks if task.get('done') is False or task.get('done') is None]
     list_tasks(incomplete_tasks)
+#UCID: ac298; date: 02/19/23;
+
 
 def get_overdue_tasks():
     """ 
     Prints a list of tasks that are over due completion (not done and expired) 
     """
-    tasks = load()
-    overdue_tasks = [task for task in tasks if task.get('done') is None and datetime.datetime.now() > datetime.datetime.strptime(task['due'], '%Y-%m-%d %H:%M:%S.%f')]
+    
+    overdue_tasks = [task for task in tasks if not task.get('done') and datetime.now() > datetime.strptime(task['due'], "%Y-%m-%d %H:%M:%S")]
     list_tasks(overdue_tasks)
+#UCID: ac298; date: 02/19/23;
 
 
-def get_time_remaining(index, tasks):
+def get_time_remaining(index):
     """
     Outputs the number of days, hours, minutes, seconds a task has before it's overdue
     otherwise shows similar info for how far past due it is.
@@ -191,8 +200,8 @@ def get_time_remaining(index, tasks):
         return
     
     task = tasks[index]
-    due_date = datetime.datetime.strptime(task["due_date"], "%Y-%m-%d %H:%M:%S")
-    now = datetime.datetime.now()
+    due_date = datetime.strptime(task["due"], "%Y-%m-%d %H:%M:%S")
+    now = datetime.now()
     time_diff = due_date - now
     
     if time_diff.total_seconds() < 0:
@@ -227,6 +236,8 @@ def print_options():
     print("done - marks a task complete by number")
     print("quit or exit - terminates the program")
     print("help - shows this list again")
+#UCID: ac298; date: 02/19/23;
+
 
 def run():
     """ runs the program until terminated or a quit/exit command is used """

@@ -62,7 +62,8 @@ def add_task(name: str, description: str, due: str):
         task['name'] = name
         task['description'] = description
         task['due'] = str_to_datetime(due)
-        tasks.a+ppend(task)
+        task['done']= None
+        tasks.append(task)
         print(f"Task {name} added successfully!")
     else:
         print("Failed to add task due to missing data.")
@@ -135,7 +136,7 @@ def view_task(index):
         return
 
     task = tasks[index]
-    completed
+    completed=False
     if tasks[index]['done'] is not None:
         completed=True
     else:
@@ -185,22 +186,27 @@ def get_incomplete_tasks():
 
 def get_overdue_tasks():
     """ prints a list of tasks that are over due completion (not done and expired) """
-    now = datetime.datetime.now()
-    overdue_tasks = [t for t in tasks if not t['done'] and t['due'] is not None and t['due'] < now]
-    return list_tasks(overdue_tasks)
+   # now = datetime.now()
+    #overdue_tasks = [t for t in tasks if not t['done'] and t['due'] is not None and t['due'] < now]
+    #return list_tasks(overdue_tasks)
     # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
     # UCID: abc123, DATE: 2023-02-23
     # Used a list comprehension to generate a list of overdue tasks by checking if the 'done' key is False and the 'due' key is older than the current time.
-
+    _tasks = []
+    for t in tasks:
+        date_object = datetime.strptime(t['due'], "%Y-%m-%d %H:%M:%S")
+        if not t['done'] and t['due'] is not None and date_object < datetime.now():
+            _tasks.append(t)
+    list_tasks(_tasks)
 
 
 # UCID: ac298; date: 02/21/23
 
 
 
-import datetime
 
-def get_time_remaining(index, tasks, command_list):
+
+def get_time_remaining(index):
     """
     Outputs the number of days, hours, minutes, seconds a task has before it's overdue
     otherwise shows similar info for how far past due it is.
@@ -209,47 +215,21 @@ def get_time_remaining(index, tasks, command_list):
     :param tasks: list, a list of dictionaries containing the tasks and their due dates
     :param command_list: list, a list of available commands
     """
-    def get_task(index, tasks):
-        if index < 0 or index >= len(tasks):
-            print("Invalid index. Please provide an index within the range of tasks.")
-            return None
-        return tasks[index]
-    
-    task = get_task(index, tasks)
-    if task:
-        print(task)
+    if not tasks[index]['due']:
+        print("Due date not set for the task.")
+    return
 
-
-    due_date = datetime.datetime.strptime(task["due_date"], "%Y-%m-%d %H:%M:%S")
-    now = datetime.datetime.now()
-    time_diff = due_date - now
-    
-    if time_diff.total_seconds() < 0:
-        time_diff = abs(time_diff)
-        overdue = True
-        message = "Task is overdue by"
+    now = datetime.now()
+    remaining_time = task['due'] - now if now < task['due'] else now - task['due']
+    if now < task['due']:
+        print(f"Task '{task['name']}' is due in {remaining_time.days} days, {remaining_time.seconds//3600} hours, {(remaining_time.seconds//60)%60} minutes and {remaining_time.seconds%60} seconds.")
     else:
-        overdue = False
-        message = "Time remaining:"
-    
-    days = time_diff.days
-    hours, remainder = divmod(time_diff.seconds, 3600)
-    minutes, seconds = divmod(remainder, 60)
-    
-    if overdue:
-        print(f"{message} {days} days, {hours} hours, {minutes} minutes, {seconds} seconds")
-    else:
-        print(f"{message} {days} days, {hours} hours, {minutes} minutes, {seconds} seconds until the task is due.")
+        print(f"Task '{task['name']}' is {remaining_time.days} days, {remaining_time.seconds//3600} hours, {(remaining_time.seconds//60)%60} minutes and {remaining_time.seconds%60} seconds overdue.")
 
-# Example usage
-command_list = ["add", "view", "update", "list", "incomplete", "overdue", "delete", "remaining", "help", "quit", "exit", "done"]
-tasks = [{"name": "task1", "due_date": "2023-03-01 12:00:00"}, {"name": "task2", "due_date": "2023-03-02 12:00:00"}]
-
-get_time_remaining(0, tasks, command_list)
 
 
 # UCID: ac298; date: 02/20/23
-
+command_list = ["add", "view", "update", "list", "incomplete", "overdue", "delete", "remaining", "help", "quit", "exit", "done"]
 def print_options():
     """ prints a readable list of commands that can be typed when prompted """
     print("Choices")
