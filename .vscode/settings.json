@@ -1,0 +1,7 @@
+{
+    "python.testing.pytestArgs": [
+        "IS601-006"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
+}
