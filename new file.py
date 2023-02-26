@@ -191,7 +191,6 @@ def get_time_remaining(index):
     """
     Outputs the number of days, hours, minutes, seconds a task has before it's overdue
     otherwise shows similar info for how far past due it is.
-
     :param index: int, the index of the task to check
     :param tasks: list, a list of dictionaries containing the tasks and their due dates
     """
@@ -287,4 +286,3 @@ def run():
         
 #if __name__ == "__main__":
 run()
-
