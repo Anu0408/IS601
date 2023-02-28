@@ -3,21 +3,25 @@ class MyCalc:
     def __init__(self):
         self.ans = 0
     
+    
     def add(self, x):
         self.ans += x
+    #UCID: ac298  #date: 02/26/23
     
     def subtract(self, x):
         self.ans -= x
-    
+    #UCID: ac298  #date: 02/26/23
+  
     def multiply(self, x):
         self.ans *= x
-    
+    #UCID: ac298  #date: 02/26/23
+  
     def divide(self, x):
         if x == 0:
             print("Error: Cannot divide by zero.")
         else:
             self.ans /= x
-    
+    #UCID: ac298  #date: 02/26/23
     
     
 if __name__ == '__main__':
@@ -37,6 +41,8 @@ if __name__ == '__main__':
             print("Error: Cannot divide by zero.")
         except:
             print("Error: Invalid input.")
+            #UCID: ac298  #date: 02/26/23
+            
 def test_add():
     calculator = MyCalc()
     calculator.add(2)
