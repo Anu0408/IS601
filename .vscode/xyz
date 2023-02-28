@@ -1,0 +1,110 @@
+// UCID: 12345678
+// Date: 2023-02-27
+
+// Initialize ans variable
+let ans = 0;
+
+// Define addition function
+function add(num) {
+ans += num;
+return ans;
+}
+
+// Define subtraction function
+function subtract(num) {
+ans -= num;
+return ans;
+}
+
+// Define multiplication function
+function multiply(num) {
+ans *= num;
+return ans;
+}
+
+// Define division function
+function divide(num) {
+if (num === 0) {
+return "Error: cannot divide by zero";
+} else {
+ans /= num;
+return ans;
+}
+}
+
+// Define main logic
+function main() {
+let input = prompt("Enter a math equation (e.g. 2 * 2):");
+let inputArr = input.split(" ");
+
+// Check if input contains "ans"
+if (inputArr.includes("ans")) {
+let index = inputArr.indexOf("ans");
+inputArr[index] = ans;
+}
+
+let num1 = Number(inputArr[0]);
+let operator = inputArr[1];
+let num2 = Number(inputArr[2]);
+
+// Perform calculation based on operator
+switch (operator) {
+case "+":
+add(num2);
+console.log(ans);
+break;
+case "-":
+subtract(num2);
+console.log(ans);
+break;
+case "*":
+multiply(num2);
+console.log(ans);
+break;
+case "/":
+let result = divide(num2);
+if (typeof result === "string") {
+console.log(result);
+} else {
+console.log(ans);
+}
+break;
+default:
+console.log("Invalid operator");
+}
+}
+
+// Test cases
+function test() {
+// Test number-add-number
+console.assert(add(2) === 2, "Test case 1 failed");
+console.assert(add(3) === 5, "Test case 2 failed");
+console.assert(add(-4) === 1, "Test case 3 failed");
+
+// Test ans-add-number
+console.assert(add(2) === 3, "Test case 4 failed");
+console.assert(add(3) === 6, "Test case 5 failed");
+console.assert(add(-4) === 2, "Test case 6 failed");
+
+// Test number-sub-number
+console.assert(subtract(2) === 0, "Test case 7 failed");
+console.assert(subtract(3) === -3, "Test case 8 failed");
+console.assert(subtract(-4) === 1, "Test case 9 failed");
+
+// Test ans-sum-number
+console.assert(add(2) === 3, "Test case 10 failed");
+console.assert(subtract(1) === 2, "Test case 11 failed");
+console.assert(add(-4) === -2, "Test case 12 failed");
+
+// Test number-mult-number
+console.assert(multiply(2) === -4, "Test case 13 failed");
+console.assert(multiply(-3) === 12, "Test case 14 failed");
+console.assert(multiply(0) === 0, "Test case 15 failed");
+
+// Test ans-mult-number
+console.assert(multiply(2) === 0, "Test case 16 failed");
+console.assert(multiply(3) === 0, "Test case 17 failed");
+console.assert(multiply(-4) === 0, "Test case 18 failed");
+
+// Test number-div-number
+console.assert(divide(2) === 0,
