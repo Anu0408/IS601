@@ -18,6 +18,7 @@ class Usable:
         if (self.quantity < 0):
             raise OutOfStockException
         return self.quantity 
+#UCID: ac298 date: 03/25/23
 
     def in_stock(self):
         return self.quantity > 0
@@ -41,15 +42,15 @@ class STAGE(Enum):
 
 class BurgerMachine:
     # Constants https://realpython.com/python-constants/
-    USES_UNTIL_CLEANING = 10
+    USES_UNTIL_CLEANING = 15
     MAX_PATTIES = 3
     MAX_TOPPINGS = 3
 
 
     buns = [Bun(name="No Bun", cost=0), Bun(name="White Burger Bun", cost=1), Bun("Wheat Burger Bun", cost=1.25),Bun("Lettuce Wrap", cost=1.5)]
-    patties = [Patty(name="Turkey", quantity=10, cost=1), Patty(name="Veggie", quantity=10, cost=1), Patty(name="Beef", quantity=10, cost=1)]
+    patties = [Patty(name="Turkey", quantity=2, cost=1), Patty(name="Veggie", quantity=10, cost=1), Patty(name="Beef", quantity=10, cost=1)]
     toppings = [Topping(name="Lettuce", quantity=10, cost=.25), Topping(name="Tomato", quantity=10, cost=.25), Topping(name="Pickles", quantity=10, cost=.25), \
-    Topping(name="Cheese", quantity=2, cost=.25), Topping(name="Ketchup", quantity=10, cost=.25),
+    Topping(name="Cheese", quantity=10, cost=.25), Topping(name="Ketchup", quantity=10, cost=.25),
      Topping(name="Mayo", quantity=10, cost=.25), Topping(name="Mustard", quantity=10, cost=.25),Topping(name="BBQ", quantity=10, cost=.25)] 
 
 
@@ -83,6 +84,8 @@ class BurgerMachine:
                 self.inprogress_burger.append(c)
                 return
         raise InvalidChoiceException
+#ucid: ac298   date: 03/25/23
+
 
     def pick_patty(self, choice):
         if self.currently_selecting != STAGE.Patty:
@@ -99,6 +102,7 @@ class BurgerMachine:
                 self.remaining_uses -= 1
                 return
         raise InvalidChoiceException
+#ucid: ac298   date: 03/25/23
 
     def pick_toppings(self, choice):
         if self.currently_selecting != STAGE.Toppings:
@@ -112,31 +116,38 @@ class BurgerMachine:
                 self.remaining_toppings -= 1
                 return
         raise InvalidChoiceException
+#ucid: ac298   date: 03/25/23
+
 
     def reset(self):
         self.remaining_patties = self.MAX_PATTIES
         self.remaining_toppings = self.MAX_TOPPINGS
         self.inprogress_burger = []
         self.currently_selecting = STAGE.Bun
+#ucid: ac298   date: 03/25/23
 
     def clean_machine(self):
         self.remaining_uses = self.USES_UNTIL_CLEANING
+#ucid: ac298   date: 03/25/23
         
     def handle_bun(self, bun):
         self.pick_bun(bun)
         self.currently_selecting = STAGE.Patty
+#ucid: ac298   date: 03/25/23
 
     def handle_patty(self, patty):
         if patty == "next":
             self.currently_selecting = STAGE.Toppings
         else:
             self.pick_patty(patty)
+#ucid: ac298   date: 03/25/23
 
     def handle_toppings(self, toppings):
         if toppings == "done":
             self.currently_selecting = STAGE.Pay
         else:
             self.pick_toppings(toppings)
+#ucid: ac298   date: 03/25/23
 
     def handle_pay(self, expected, total):
         # print(expected. total)
@@ -150,23 +161,27 @@ class BurgerMachine:
             self.reset()
         else:
             raise InvalidPaymentException
+#ucid: ac298   date: 03/25/23
         
     def print_current_burger(self):
         print(f"Current Burger: {','.join([x.name for x in self.inprogress_burger])}")
+#ucid: ac298   date: 03/25/23
 
 
     def calculate_cost(self):
         cost = 0
         for component in self.inprogress_burger:
             cost += component.cost
-        # print(f"The total cost of the burger is {cost}")
+        formatted_cost = "${:,.2f}".format(cost) # format cost as a currency
+        print(f"The total cost of the burger is {formatted_cost}")
         return cost
-
+#UCID: ac298  Date: 03/27/23
     
     def restart(self):
         self.inprogress_burger = []
         self.currently_selecting = STAGE.Bun
         print("Burger machine has been restarted")
+#ucid: ac298   date: 03/25/23
         
     def run(self):
         try:
@@ -187,8 +202,7 @@ class BurgerMachine:
                 # show expected value as currency format
                 # require total to be entered as currency format
                 total = input(f"Your total is ${expected}, please enter the exact value.\n")
-                self.handle_pay(expected, total)
-                
+                self.handle_pay(expected, total)                
                 choice = input("What would you like to do? (order or quit)\n")
                 if choice == "quit":
                     #exit() in recursive functions creates stackoverflow
@@ -203,6 +217,7 @@ class BurgerMachine:
         except OutOfStockException:
             print(f"{str(self.currently_selecting)[6:]}: Out of Stock")
             # show an appropriate message of what stage/category was out of stock
+        #UCID: ac298 date: 03/25/23
         
         # handle NeedsCleaningException
         except NeedsCleaningException:
@@ -218,6 +233,8 @@ class BurgerMachine:
             # prompt user to type "clean" to trigger clean_machine()
             # any other input is ignored
             # print a message whether or not the machine was cleaned
+            #UCID: ac298 date: 03/25/23
+            
         # handle InvalidChoiceException
         except InvalidChoiceException:
             print(f"{str(self.currently_selecting)[6:]}: Invalid Choice")
@@ -231,6 +248,7 @@ class BurgerMachine:
             elif str(self.currently_selecting)[6:] == "Toppings":
                 print("Moving to Stage Payments")
                 self.currently_selecting = STAGE.Pay
+            #UCID: ac298 date: 03/25/23
             
                 
             # show an appropriate message of which stage/category was exceeded
@@ -242,9 +260,9 @@ class BurgerMachine:
             # show an appropriate message
         except:
             # this is a default catch all, follow the steps above
-            print("Something went wrong")
-        
+            print("Something went wrong")        
         self.run()
+#UCID: ac298 date: 03/25/23
 
     def start(self):
         self.run()
@@ -253,3 +271,4 @@ class BurgerMachine:
 if __name__ == "__main__":
     bm = BurgerMachine()
     bm.start()
+    #UCID: ac298 date: 03/25/23

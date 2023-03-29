@@ -41,6 +41,7 @@ def Test_Case1_second_order(Test_Case1_first_order):
     return Test_Case1_first_order
 #UCID: ac298  Date: 03/27/23
 
+
 def test_1(Test_Case1_second_order):
     print(f"Order 2 (Inprogress Burger): {Test_Case1_second_order.inprogress_burger}")
     for j in Test_Case1_second_order.buns:
@@ -208,8 +209,6 @@ def test_5(Test_Case5_second_order):
         assert True
         return
     assert False
-#UCID: ac298  Date: 03/27/23
-
 
 @pytest.fixture
 def Test_Case6_first_order(machine):
@@ -229,7 +228,6 @@ def Test_Case6_first_order(machine):
     except:
         print("Invalid Payment Exception")
 #UCID: ac298  Date: 03/27/23
-
 
 @pytest.fixture
 def Test_Case6_second_order(Test_Case6_first_order):
@@ -371,4 +369,4 @@ def test_8(Test_Case8_second_order):
         assert True
     else:
         assert False
-        #UCID: ac298  Date: 03/27/23
+#UCID: ac298  Date: 03/27/23
