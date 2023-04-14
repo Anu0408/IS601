@@ -241,4 +241,4 @@ def delete():
         if result:
             flash("Deleted successfully", 'success')
     return redirect(url_for("company.search", **args))
-    pass
+    # pass
