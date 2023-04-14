@@ -57,7 +57,7 @@ def importCSV():
                     companies.append({'name':row["company_name"], 'address':row["address"], 'city':row["city"], 'country':row["country"], 'state':row["state"], 'zip':row["zip"],
                  'website':row["web"]})
                     
-                    #UCID: ac298  #UCID: ac298
+                    #UCID: ac298
                 # TODO importcsv-4 extract employee data and append to employee list as a dict only with employee data
                 if (row["first_name"].strip() != "" and row["last_name"].strip() != "" and row['email'].strip() != "" and row['company_name'].strip() != ""):
                     employees.append({'first_name':row["first_name"], 'last_name':row["last_name"], 'email':row['email'], 'company_name':row['company_name']})
@@ -66,14 +66,12 @@ def importCSV():
                 print(f"Inserting or updating {len(companies)} companies")
                 try:
                     result = DB.insertMany(company_query, companies)
-                    #UCID: ac298
                     # TODO importcsv-5 display flash message about number of companies inserted
                     flash(f'{len(companies)} companies have been inserted', 'success')
                 except Exception as e:
                     traceback.print_exc()
                     flash("There was an error loading in the csv data", "danger")
             else:
-                #UCID: ac298 #
                 # TODO importcsv-6 display flash message (info) that no companies were loaded
                 # pass
                    #UCID: ac298
