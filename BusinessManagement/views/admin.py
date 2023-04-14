@@ -73,6 +73,7 @@ def importCSV():
                     traceback.print_exc()
                     flash("There was an error loading in the csv data", "danger")
             else:
+                #UCID: ac298
                 # TODO importcsv-6 display flash message (info) that no companies were loaded
                 # pass
                    #UCID: ac298
