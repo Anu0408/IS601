@@ -18,9 +18,9 @@ def importCSV():
         if file.filename == '':
             flash('No selected file', "warning")
             return redirect(request.url)
+        #UCID: ac298
         # TODO importcsv-1 check that it's a .csv file, return a proper flash message if it's not
         
-
         if file.filename.split('.')[-1] != 'csv':
             flash('Uploaded file is not CSV file', 'danger')
             return redirect(request.url)
@@ -48,17 +48,17 @@ def importCSV():
                         company_id = (SELECT id FROM IS601_MP3_Companies WHERE name=%(company_name)s LIMIT 1)
             """
             # Note: this reads the file as a stream instead of requiring us to save it
+               #UCID: ac298
             stream = io.TextIOWrapper(file.stream._file, "UTF8", newline=None)
-            
             for row in csv.DictReader(stream, delimiter=','):
                 # print(row) #example
                 # TODO importcsv-3 extract company data and append to company list as a dict only with company data
                 if (row["company_name"].strip() != "" and row["address"].strip() != "" and row["city"].strip() != "" and row["country"].strip() != "" and row["state"].strip() != "" and row["zip"].strip() != "" and row["web"].strip() != ""):
                     companies.append({'name':row["company_name"], 'address':row["address"], 'city':row["city"], 'country':row["country"], 'state':row["state"], 'zip':row["zip"],
                  'website':row["web"]})
+                    
+                    #UCID: ac298
                 # TODO importcsv-4 extract employee data and append to employee list as a dict only with employee data
-                
-
                 if (row["first_name"].strip() != "" and row["last_name"].strip() != "" and row['email'].strip() != "" and row['company_name'].strip() != ""):
                     employees.append({'first_name':row["first_name"], 'last_name':row["last_name"], 'email':row['email'], 'company_name':row['company_name']})
 
@@ -74,18 +74,21 @@ def importCSV():
             else:
                 # TODO importcsv-6 display flash message (info) that no companies were loaded
                 # pass
+                   #UCID: ac298
                 flash("No companies are loaded")
             if len(employees) > 0:
                 print(f"Inserting or updating {len(employees)} employees")
                 try:
                     result = DB.insertMany(employee_query, employees)
                     # TODO importcsv-7 display flash message about number of employees loaded
+                       #UCID: ac298
                     flash(f'{len(employees)} employees have been inserted', "success")
                 except Exception as e:
                     traceback.print_exc()
                     flash("There was an error loading in the csv data", "danger")
             else:
                 # TODO importcsv-8 display flash message (info) that no companies were loaded
+                   #UCID: ac298
                 
 
                 flash("No employees are loaded")

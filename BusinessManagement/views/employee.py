@@ -51,7 +51,7 @@ def search():
         args.append(int(limit))
     elif limit and (int(limit) <= 0 or int(limit) > 100):
         flash("Enter the limit between 1 and 100", 'warning')
-    
+    #UCID:ac298
     print("query",query)
     print("args", args)
     try:
@@ -89,6 +89,7 @@ def add():
         if email == "":
             flash("Enter email", 'warning')
             return redirect(request.url)
+        #UCID: ac298
         
         try:
             # Insert query to add the employee data to DB
@@ -119,26 +120,32 @@ def edit():
             last_name = str(request.form.get('last_name'))
             email = str(request.form.get('email'))
             company_id = str(request.form.get('company'))
+            #UCID: ac298
             # TODO edit-2 first_name is required (flash proper error message)
             if first_name == '' or first_name == None:
                 flash("first name is required", "danger")
                 return redirect("add")
+             #UCID: ac298
             # TODO edit-3 last_name is required (flash proper error message)
             if last_name == '' or last_name == None:
                 flash("last name is required", "danger")
                 return redirect("add")
+             #UCID: ac298
             # TODO edit-4 company (may be None)
             if company_id == '':
                 company_id = None
+                 #UCID: ac298
             # TODO edit-5 email is required (flash proper error message)
             if email == '' or email == None:
                 flash("email is required", "danger")
                 return redirect("add")
+             #UCID: ac298
             # TODO edit-5a verify email is in the correct format
             has_error = False  # use this to control whether or not an insert occurs
             
             if not has_error:
                 try:
+                     #UCID: ac298
                     # TODO edit-6 fill in proper update query
                     result = DB.update("""
                     UPDATE IS601_MP3_Employees SET first_name = %s, last_name = %s, company_id = %s, email = %s WHERE id = %s
@@ -147,11 +154,13 @@ def edit():
                     if result.status:
                         flash("Updated record", "success")
                 except Exception as e:
+                     #UCID: ac298
                     # TODO edit-7 make this user-friendly
                     flash(f" Following exception occured while updating the employee", "danger")
                     
         row = {}
         try:
+             #UCID: ac298
             # TODO edit-8 fetch the updated data
             result = DB.selectOne("""SELECT e.first_name, e.last_name, e.email, e.company_id, IF(c.name is not null, c.name,'N/A') AS 
             company_name from IS601_MP3_Employees e LEFT JOIN IS601_MP3_Companies c ON e.company_id = c.id WHERE e.id = %s""", id)
@@ -159,14 +168,17 @@ def edit():
             if result.status:
                 row = result.row
         except Exception as e:
+             #UCID: ac298
             # TODO edit-9 make this user-friendly
             flash(f"{e}", "danger")
+             #UCID: ac298
     # TODO edit-10 pass the employee data to the render template
     return render_template("edit_employee.html", employee=row)
+ #UCID: ac298
 
 @employee.route("/delete", methods=["GET"])
 def delete():
-    
+     #UCID: ac298
 
     # code for deleting employee
     id = request.args.get('id')

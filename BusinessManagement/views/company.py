@@ -8,7 +8,7 @@ def search():
     # DO NOT DELETE PROVIDED COMMENTS
     # TODO search-1 retrieve id, name, address, city, country, state, zip, website, employee count for the company
     # don't do SELECT *
-    
+    #UCID: ac298
 
     ## Select query to get company data for search
     query = "SELECT c.id, c.name, c.address, c.city, c.country, c.state, c.zip, c.website, COUNT(e.id) AS employees FROM IS601_MP3_Companies c LEFT JOIN IS601_MP3_Employees e ON e.company_id = c.id WHERE 1=1"
@@ -31,19 +31,23 @@ def search():
     if name:
         query += " AND c.name like %s"
         args.append(f"%{name}%")
+        #UCID: ac298
     # TODO search-4 append an equality filter for country if provided
     if country:
         query += " AND c.country like %s"
         args.append(f"%{country}%")
+        #UCID: ac298
     # TODO search-5 append an equality filter for state if provided
     if state:
         query += " AND c.state like %s"
         args.append(f"%{state}%")
     query += " GROUP BY c.id"
+    #UCID: ac298
     # TODO search-6 append sorting if column and order are provided and within the allows columsn and allowed order asc,desc
     if column and order:
         if column in allowed_columns and order in ["asc", "desc"]:
             query += f" ORDER BY {column} {order}"
+            #UCID: ac298
     # TODO search-7 append limit (default 10) or limit greater than 1 and less than or equal to 100
     # TODO search-8 provide a proper error message if limit isn't a number or if it's out of bounds
     if limit and int(limit) > 0 and int(limit) <= 100:
@@ -72,7 +76,7 @@ def search():
 def add():
     if request.method == "POST":
         # TODO add-1 retrieve form data for name, address, city, state, country, zip, website
-        
+        #UCID: ac298
         # retrieving the form data
         name = request.form.get("name")
         address = request.form.get("address")
@@ -99,11 +103,14 @@ def add():
             return redirect(request.url)
         if country == "":
             flash("Enter country", 'warning')
-            return redirect("add")    
+            return redirect("add")   
+        if zip == "":
+            flash("Enter Zip", 'warning')
+            return redirect(request.url) 
         if state == "":
             flash("Enter state", 'warning')
             return redirect(request.url)
-        if website == '':
+        if website == "":
             website = 'N/A'
         has_error = False # use this to control whether or not an insert occurs
         
@@ -123,7 +130,7 @@ def add():
                     flash("Added Company", "success")
             except Exception as e:
                 # TODO add-9 make message user friendly
-                
+                #UCID: ac298
 
                 ## flash message
                 print(e)
@@ -135,7 +142,7 @@ def add():
 def edit():
     # TODO edit-1 request args id is required (flash proper error message)
     
-
+#UCID: ac298
     ## code to check for id, if no id flash a message
     id = request.args.get("id")
     if id is None:
@@ -145,7 +152,6 @@ def edit():
         if request.method == "POST":
             # TODO edit-2 retrieve form data for name, address, city, state, country, zip, website
             
-
             ## retrieving the form data
             name = request.form.get('name')
             address = request.form.get('address')
@@ -155,38 +161,42 @@ def edit():
             zipcode = request.form.get('zip')
             website = request.form.get('website')
             
-
             ## flash messages for required fields
             # TODO edit-3 name is required (flash proper error message)
             if name == '' or name == None:
                 flash("Name is required", "danger")
                 return redirect("add")
+            #UCID: ac298
             # TODO edit-4 address is required (flash proper error message)
             if address == '' or address == None:
                 flash("Address is required", "danger")
                 return redirect("add")
+            #UCID: ac298
             # TODO edit-5 city is required (flash proper error message)
             if city == '' or city == None:
                 flash("City is required", "danger")
                 return redirect("add")
+            #UCID: ac298
             # TODO edit-6 state is required (flash proper error message)
             if state == '' or state == None:
                 flash("State is required", "danger")
                 return redirect("edit")
+            #UCID: ac298
             # TODO edit-7 country is required (flash proper error message)
             if country == '' or country == None:
                 flash("Country is required", "danger")
                 return redirect("edit")
+            #UCID: ac298
             # TODO edit-8 website is not required
             if website == '' or website == None:
                 website = 'N/A'
-            # 
+            # #UCID: ac298
             # note: call zip variable zipcode as zip is a built in function it could lead to issues
             data = [name, address, city, state, country, zipcode, website]
             data.append(id)
             try:
                 # TODO edit-9 fill in proper update query
-                
+                #UCID: ac298
 
                 ## Update query to record the edited data
                 result = DB.update("""
@@ -200,7 +210,7 @@ def edit():
                 flash(f"Exception occured: {str(e)}", "danger")
         try:
             # TODO edit-11 fetch the updated data
-            
+            #UCID: ac298
 
             ## selecting the edited data
             result = DB.selectOne("SELECT name, address, city, country, state, zip, website FROM IS601_MP3_Companies WHERE id = %s", id)
@@ -212,10 +222,11 @@ def edit():
             flash(f"Exception occured: {str(e)}", "danger")
     # TODO edit-13 pass the company data to the render template
     return render_template("edit_company.html", row=row, state = row['state'], country = row['country'])
+#UCID: ac298
 
 @company.route("/delete", methods=["GET"])
 def delete():
-    
+    #UCID: ac298
 
     ## code for deleting company
     id = request.args.get('id')
