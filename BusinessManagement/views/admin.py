@@ -57,7 +57,7 @@ def importCSV():
                     companies.append({'name':row["company_name"], 'address':row["address"], 'city':row["city"], 'country':row["country"], 'state':row["state"], 'zip':row["zip"],
                  'website':row["web"]})
                     
-                    #UCID: ac298
+                    #UCID: ac298  #UCID: ac298
                 # TODO importcsv-4 extract employee data and append to employee list as a dict only with employee data
                 if (row["first_name"].strip() != "" and row["last_name"].strip() != "" and row['email'].strip() != "" and row['company_name'].strip() != ""):
                     employees.append({'first_name':row["first_name"], 'last_name':row["last_name"], 'email':row['email'], 'company_name':row['company_name']})
