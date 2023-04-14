@@ -89,7 +89,5 @@ def importCSV():
             else:
                 # TODO importcsv-8 display flash message (info) that no companies were loaded
                    #UCID: ac298
-                
-
                 flash("No employees are loaded")
     return render_template("upload.html")
