@@ -227,7 +227,6 @@ def edit():
 @company.route("/delete", methods=["GET"])
 def delete():
     #UCID: ac298
-
     ## code for deleting company
     id = request.args.get('id')
     args = {**request.args}
