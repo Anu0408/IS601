@@ -1,41 +1,28 @@
 {% extends "layout.html" %}
 {% block title %}Add Employee{% endblock %}
 {% block content %}
-{% from "company_dropdown.html" import company_dropdown %}
 <div class="container-fluid">
     <div class="h1">Add Employee</div>
     <div>
         <form method="POST">
             {#
             generate fields with proper types for
-            first_name (required)
-            last_name (required)
-            email (required)
-            if a validation error occurs, the inserted form data should persist
+            first_name
+            last_name
+            email
             #}
-
-
-            <div class="form-group mb-3">
-                <label for="first_name" class="form-label">first_name</label>
-                <input id="first_name" class="form-control" name="first_name" type="text" value="">
-            </div>
-            <!-- UCID: ac298; Date: 04/08/23 -->
-
-            <div class="form-group mb-3">
-                <label for="last_name" class="form-label">last_name</label>
-                <input id="last_name" class="form-control" name="last_name" type="text" value="">
-            </div>
-            <!-- UCID: ac298; Date: 04/08/23 -->
-
-            <div class="form-group mb-3">
-                <label for="email" class="form-label">email</label>
-                <input id="email" class="form-control" name="email" type="email" value="">
-            </div>
-            <!-- UCID: ac298; Date: 04/08/23 -->
+            <label class="form-label" for="first_name">First Name</label>
+            <input class="form-control" id="first_name" name="first_name" type="text"/>
+            <label class="form-label" for="last_name">Last Name</label>
+            <input class="form-control" id="last_name" name="last_name" type="text"/>
+            <label class="form-label" for="email">Email</label>
+            <input class="form-control" id="email" name="email" type="email"/>
             {# use the below for company selection #}
-            {{ company_dropdown() }}
+            <label class="form-label" for="company">Company</label>
+            {% include "company_dropdown.html" %}
             <input type="submit" class="btn btn-primary" value="Save Employee" />
         </form>
     </div>
 </div>
 {% endblock %}
+#UCID: ac298
