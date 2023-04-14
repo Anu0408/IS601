@@ -66,6 +66,7 @@ def importCSV():
                 print(f"Inserting or updating {len(companies)} companies")
                 try:
                     result = DB.insertMany(company_query, companies)
+                    #UCID: ac298
                     # TODO importcsv-5 display flash message about number of companies inserted
                     flash(f'{len(companies)} companies have been inserted', 'success')
                 except Exception as e:
@@ -89,7 +90,5 @@ def importCSV():
             else:
                 # TODO importcsv-8 display flash message (info) that no companies were loaded
                    #UCID: ac298
-                
-
                 flash("No employees are loaded")
     return render_template("upload.html")
