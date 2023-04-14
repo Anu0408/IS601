@@ -1,88 +1,99 @@
 {% extends "layout.html" %}
 {% block title %}Company Directory{% endblock %}
 {% block content %}
+{% from "country_state_selector.html" import country_state_selector %}
+{% from "sort_filter.html" import sort_filter %}
 <div class="container-fluid">
     <div class="h1 text-center">Company Directory</div>
     {# TODO
     build a horizontal filter/sort form with
-    name (company name)
+    name (show as company name but name field should be name)
     country/state (provided)
     sort/order (using allowed_columns and provided partial template)
-    limit
+    limit (default 10)
     ensure all fields prefill with request arg data if provided
     #}
-    <form class="row row-cols-lg-auto g-3 align-items-center" method="GET">
-        <div class="col-12">
-            <input type="text" name="name" class="form-control" id="name" placeholder="Name"
-                value="{{request.args.get('name') or ''}}">
-        </div>
-        {% with layout = "horizontal" %}
-        {% include "country_state_selector.html" %}
-        {% endwith %}
-        {% with cols = allowed_columns %}
-        {% include "sort_filter.html" %}
-        <div class="col-12">
-            <input class="form-control" type="number" name="limit"  id="limit" placeholder="Limit" min="1" max="100"
-                value="{{request.args.get('limit') or '10'}}">
-        </div>
-        {% endwith %}
-        
-        <div class="col-12">
-            <input type="submit" class="btn btn-primary" value="Filter" />
-        </div>
-        <div class="col-12">
-            <a href="?" class="btn btn-secondary">Reset</a>
+    <form method="GET">
+        <div class="row">
+            <div class="col">
+                <input id="name" class="form-control" placeholder="name" name="name" type="text"
+                    value="{{ allowed_columns[0].value }}">
+            </div>
+            <!-- UCID: ac298; Date: 04/08/23 -->
+
+            {{country_state_selector(layout="horizontal")}}
+            {{sort_filter(cols=allowed_columns)}}
+            <div class="col">
+                <input id="limit" type="number" class="form-control" value="10" name="limit" />
+            </div>
+            <!-- UCID: ac298; Date: 04/08/23 -->
+            <div class="col">
+                <input type="submit" class="btn btn-primary" value="Filter" />
+            </div>
+            <!-- UCID: ac298; Date: 04/08/23 -->
+            <div class="col">
+                <a href="?" class="btn btn-secondary">Reset</a>
+            </div>
         </div>
     </form>
     <div class="table-responsive">
-    <table class="table">
-        {% if rows and rows|length > 0 %}
-        <thead>
-            <tr class="text-capitalize">
-                {# generate th tags for each column to display #}
-                {# IMPORTANT use table column names as the headings, replace _ with space #}
-                {% for r in rows[0] %}
-                <th>{{r | replace("_", " ")}}</th>
+        <table class="table">
+            {% if rows and rows|length > 0 %}
+            <thead>
+                <tr class="text-capitalize">
+                    {# generate th tags for each column to display #}
+                    {# IMPORTANT use table column names as the headings, replace _ with space via filter #}
+                    <th>id</th>
+                    <th>name</th>
+                    <th>address</th>
+                    <th>city</th>
+                    <th>country</th>
+                    <th>state</th>
+                    <th>zip</th>
+                    <th>website</th>
+                    <th>employees</th>
+                    <th>Actions</th>
+                </tr>
+                <!-- UCID: ac298; Date: 04/08/23 -->
+            </thead>
+            <tbody>
+                {# generate tr with td tags for each piece of data #}
+                {# if the td is for website, display it as a link where the text is "website" and the url is the
+                website url #}
+                {# in the last column add the following
+                a view button that passes the company id to employee search (this will be a company employee
+                directory) also pass company_name as an argument
+                an edit button that passes the company id to company edit
+                a delete button that passes the company id and the request args to the company delete route
+                #}
+                {% for row in rows %}
+                <tr>
+                    <td>{{ row.id }}</td>
+                    <td>{{ row.name }}</td>
+                    <td>{{ row.address }}</td>
+                    <td>{{ row.city }}</td>
+                    <td>{{ row.country }}</td>
+                    <td>{{ row.state }}</td>
+                    <td>{{ row.zip }}</td>
+                    <td><a href="{{ row.website }}">website</a></td>
+                    <td>{{ row.employees }}</td>
+                    <td>
+                        <a href="{{url_for('company.edit', id=row.id)}}">Edit</a>
+                        <a href="{{url_for('company.delete', id=row.id)}}">Delete</a>
+                    </td>
+                    <!-- UCID: ac298; Date: 04/08/23 -->
+                </tr>
                 {% endfor %}
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {# generate tr with td tags for each piece of data #}
-            {# if the td is for website, display it as a link where the text is "website" and the url is the
-            website url #}
-            {# in the last column add the following
-            a view button that passes the company id to employee search (this will be a company employee
-            directory) also pass company_name as an argument
-            an edit button that passes the company id to company edit
-            a delete button that passes the company id and the request args to the company delete route
-            #}
-            {% for r in rows %}
-            <tr>
-                {% for col,v in r.items() %}
-                    {% if col == 'website' and value != 'N/A' %}
-                        <td class="text-center"><a href="{{v}}" class="link-primary" target="_blank">Website</a></td>
-                    {% else %}
-                        <td>{{v}}</td>
-                    {% endif %}
-                {% endfor %}
-                <td><a href="{{url_for('employee.search', company=r.get('id'), company_name=r.get('name'))}}">View</a>
-                    <a href="{{url_for('company.edit', id=r.get('id'))}}">Edit</a>
-                    {# **request.args spreads the key value pairs to be part of the url#}
-                    {# the idea is to pass it to the next route #}
-                    <a href="{{url_for('company.delete', id=r.get('id'), **request.args)}}">Delete</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-        {% else %}
-        <tbody>
-            <tr>
-                <td colspan="100%">No results to show</td>
-            </tr>
-        </tbody>
-        {% endif %}
-    </table>
+
+            </tbody>
+            {% else %}
+            <tbody>
+                <tr>
+                    <td colspan="100%">No results to show</td>
+                </tr>
+            </tbody>
+            {% endif %}
+        </table>
     </div>
 </div>
 {% endblock %}

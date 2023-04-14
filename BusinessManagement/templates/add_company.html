@@ -1,29 +1,57 @@
 {% extends "layout.html" %}
 {% block title %}Add Company{% endblock %}
 {% block content %}
+{% from "country_state_selector.html" import country_state_selector %}
+
 <div class="container-fluid">
     <div class="h1">Add Company</div>
     <div>
+
         <form method="POST">
             {#
-            generate fields with proper types for
-            name
-            address
-            city
-            website
+            using regular html generate fields (labels and input) with proper types for
+            name (required)
+            address (required)
+            city (required) (can be a text field, doesn't need to be a valid city)
+            state/country (required) (given)
+            zip (required)
+            website (optional)
+            if a validation error occurs, the inserted form data should persist
             #}
-            <label class="form-label" for="name">Name</label>
-            <input class="form-control" id="name" name="name" type="text"/>
-            <label class="form-label" for="address">Address</label>
-            <input class="form-control" id="address" name="address" type="text"/>
-            <label class="form-label" for="city">City</label>
-            <input class="form-control" id="city" name="city" type="text"/>
-            <label class="form-label" for="zip">Zip</label>
-            <input class="form-control" id="zip" name="zip" type="number"/>
-            <label class="form-label" for="website">Website</label>
-            <input class="form-control" id="website" name="website" type="text"/>
+
+            <div class="form-group mb-3">
+                <label for="name" class="form-label">name</label>
+                <input id="name" class="form-control" name="name" type="text" value="">
+            </div>
+            <!-- UCID: ac298; Date: 04/08/23 -->
+
+
+            <div class="form-group mb-3">
+                <label for="address" class="form-label">address</label>
+                <input id="address" class="form-control" name="address" type="text" value="">
+            </div>
+            <!-- UCID: ac298; Date: 04/08/23 -->
+
+            <div class="form-group mb-3">
+                <label for="city" class="form-label">city</label>
+                <input id="city" class="form-control" name="city" type="text" value="">
+            </div>
+            <!-- UCID: ac298; Date: 04/08/23 -->
+
+            <div class="form-group mb-3">
+                <label for="website" class="form-label">website</label>
+                <input id="website" class="form-control" name="website" type="url" value="">
+            </div>
+            <!-- UCID: ac298; Date: 04/08/23 -->
+            
+            <div class="form-group mb-3">
+                <label for="zip" class="form-label">zip</label>
+                <input id="zip" class="form-control" name="zip" type="text" value="">
+            </div>
+            <!-- UCID: ac298; Date: 04/08/23 -->
+
             {# use this for country/state selection #}
-            {% include "country_state_selector.html" %}
+            {{country_state_selector()}}
             <input type="submit" class="btn btn-primary" value="Save Company" />
         </form>
     </div>

@@ -1,40 +1,52 @@
 {% extends "layout.html" %}
 {% block title %}Edit Company{% endblock %}
 {% block content %}
+{% from "country_state_selector.html" import country_state_selector %}
+
 <div class="container-fluid">
     <div class="h1">Edit Company</div>
     <div>
         <form method="POST">
             {#
             generate fields with proper types for
-            name
-            address
-            city
-            website
+            name (required)
+            address (required)
+            city (required)
+            state/country (use the country_state_selector)
+            zip (required)
+            website (not required)
             and prefill the fields with loaded company data
             #}
             <div class="form-group mb-3">
-                <label class="form-label" for="name">Name</label>
-                <input class="form-control" id="name" name="name" readonly value="{{row.name}}" />
+                <label for="name" class="form-label">name</label>
+                <input id="name" class="form-control" name="name" type="text" value="{{ company.name }}">
             </div>
+            <!-- UCID: ac298; Date: 04/08/23 -->
             <div class="form-group mb-3">
-                <label class="form-label" for="address">Address</label>
-                <input class="form-control" id="address" name="address" value="{{row.address}}" />
+                <label for="address" class="form-label">address</label>
+                <input id="address" class="form-control" name="address" type="text" value="{{ company.address }}">
             </div>
+            <!-- UCID: ac298; Date: 04/08/23 -->
             <div class="form-group mb-3">
-                <label class="form-label" for="city">City</label>
-                <input class="form-control" id="city" name="city" value="{{row.city}}" />
+                <label for="website" class="form-label">website</label>
+                <input id="website" class="form-control" name="website" type="text" value="{{ company.website }}">
             </div>
+            <!-- UCID: ac298; Date: 04/08/23 -->
             <div class="form-group mb-3">
-                <label class="form-label" for="zip">Zip</label>
-                <input class="form-control" id="zip" name="zip" value="{{row.zip}}" />
+                <label for="city" class="form-label">city</label>
+                <input id="city" class="form-control" name="city" type="text" value="{{ company.city }}">
             </div>
-            <div class="form-group mb-3">
-                <label class="form-label" for="website">Website</label>
-                <input class="form-control" id="website" name="website" value="{{row.website}}" />
-            </div>
+            <!-- UCID: ac298; Date: 04/08/23 -->
+
             {# use this for country/state selection #}
-            {% include "country_state_selector.html" %}
+            {{country_state_selector(country=company.country, state=company.state)}}
+
+            <div class="form-group mb-3">
+                <label for="zip" class="form-label">zip</label>
+                <input id="zip" class="form-control" name="zip" type="number" value="{{ company.zip }}">
+            </div>
+            <!-- UCID: ac298; Date: 04/08/23 -->
+
             <input type="submit" class="btn btn-primary" value="Save Company" />
         </form>
     </div>
