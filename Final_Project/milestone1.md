@@ -1,6 +1,6 @@
 <table><tr><td> <em>Assignment: </em> IS601 Milestone1 Deliverable</td></tr>
 <tr><td> <em>Student: </em> Anupama Chakrabhavi Venkatappa (ac298)</td></tr>
-<tr><td> <em>Generated: </em> 4/18/2023 2:13:16 AM</td></tr>
+<tr><td> <em>Generated: </em> 4/18/2023 5:18:47 PM</td></tr>
 <tr><td> <em>Grading Link: </em> <a rel="noreferrer noopener" href="https://learn.ethereallab.app/homework/IS601-006-S23/is601-milestone1-deliverable/grade/ac298" target="_blank">Grading</a></td></tr></table>
 <table><tr><td> <em>Instructions: </em> <ol><li>Checkout Milestone1 branch</li><li>Create a milestone1.md file in your Project folder</li><li>Git add/commit/push this empty file to Milestone1 (you'll need the link later)</li><li>Ensure your images display correctly in the sample markdown at the bottom</li><ol><li>NOTE: You may want to try to capture as much checklist evidence in your screenshots as possible, you do not need individual screenshots and are recommended to combine things when possible. Also, some screenshots may be reused if applicable.</li></ol><li>Save the submission items</li><li>Copy/paste the markdown from the "Copy markdown to clipboard link" or via the download button</li><li>Paste the code into the milestone1.md file or overwrite the file</li><li>Git add/commit/push the md file to Milestone1</li><li>Double check the images load when viewing the markdown file (points will be lost for invalid/non-loading images)</li><li>Make a pull request from Milestone1 to dev and merge it (resolve any conflicts)<ol><li>Make sure everything looks ok on heroku dev</li></ol></li><li>Make a pull request from dev to prod (resolve any conflicts)<ol><li>Make sure everything looks ok on heroku prod</li></ol></li><li>Submit the direct link from github prod branch to the milestone1.md file (no other links will be accepted and will result in 0)</li></ol></td></tr></table>
 <table><tr><td> <em>Deliverable 1: </em> Feature: User will be able to register a new account </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="https://user-images.githubusercontent.com/54863474/211707773-e6aef7cb-d5b2-4053-bbb1-b09fc609041e.png"></td></tr>
@@ -217,6 +217,12 @@
 <tr><td><img width="768px" src="https://user-images.githubusercontent.com/123420651/232656502-da8f7c9e-a95a-4b73-b83a-cd8838605a7e.png"/></td></tr>
 <tr><td> <em>Caption:</em> <p>Showing email not available validation - Duplicate entry ( already taken)<br></p>
 </td></tr>
+<tr><td><img width="768px" src="https://user-images.githubusercontent.com/123420651/232855795-c07f52ed-afe8-4a29-8be0-2752bef27e68.png"/></td></tr>
+<tr><td> <em>Caption:</em> <p>Showing username validation message<br></p>
+</td></tr>
+<tr><td><img width="768px" src="https://user-images.githubusercontent.com/123420651/232856412-245a9ee2-1b16-4ff6-9b4d-b56d5473e68e.png"/></td></tr>
+<tr><td> <em>Caption:</em> <p>Showing email validation message<br></p>
+</td></tr>
 </table></td></tr>
 <tr><td> <em>Sub-Task 2: </em> Add before and after screenshots of the Users table when a user edits their profile</td></tr>
 <tr><td><table><tr><td><img width="768px" src="https://user-images.githubusercontent.com/123420651/232679759-31f7aedc-f65d-4542-bcc4-2171f26fcff0.png"/></td></tr>
@@ -234,10 +240,10 @@
 <tr><td> <em>Sub-Task 4: </em> Explain briefly how the process/code works (edit only)</td></tr>
 <tr><td> <em>Response:</em> <div>When updating a user's email, username, or password, the edit logic typically involves<br>several steps to ensure that the changes are made securely and accurately.</div><div><br></div><div>First, the<br>system should validate that the new email, username, or password meets the required<br>criteria. For example, the new email address should be in a valid format,<br>the new username should not already exist in the database, and the new<br>password should be strong enough to resist brute force attacks.</div><div><br></div><div>Once the new information<br>has been validated, the system should update the user's record in the database.<br>This typically involves querying the database to retrieve the user's existing record, updating<br>the relevant fields with the new information, and then saving the updated record<br>back to the database.</div><div><br></div><div>It's important to note that during this process, the system<br>should also ensure that the user's authentication token is updated, so that they<br>are not locked out of their account due to a mismatch between their<br>stored credentials and their current session.</div><div><br></div><div>Finally, the system should also ensure that any<br>related data, such as the user's profile picture or settings, are updated as<br>well if necessary.</div><div><br></div><div>Overall, the edit logic for updating email, username, and password should<br>prioritize security and accuracy, and should be thoroughly tested to ensure that it<br>works as intended.</div><br></td></tr>
 </table></td></tr>
-<table><tr><td> <em>Deliverable 9: </em> Misc </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="https://user-images.githubusercontent.com/54863474/211707834-bf5a5b13-ec36-4597-9741-aa830c195be2.png"></td></tr>
+<table><tr><td> <em>Deliverable 9: </em> Misc </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="https://user-images.githubusercontent.com/54863474/211707773-e6aef7cb-d5b2-4053-bbb1-b09fc609041e.png"></td></tr>
 <tr><td><table><tr><td> <em>Sub-Task 1: </em> Describe any issues and learnings throughout this milestone</td></tr>
 <tr><td> <em>Response:</em> <div>&nbsp;I learned how to build a simple Flask web application from scratch, including<br>creating routes, rendering templates, and connecting to a database, and how to use<br>HTML and CSS to create visually appealing web pages and forms, including adding<br>styles to buttons, input fields, and other page elements, how to use SQL<br>to create tables, insert data, and retrieve data from a database, allowing you<br>to store and manage user information.</div><div><br></div><br></td></tr>
 <tr><td> <em>Sub-Task 2: </em> Prod Application Link to Login Page</td></tr>
-<tr><td>Not provided</td></tr>
+<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://is601-ac298-prod.herokuapp.com/login">https://is601-ac298-prod.herokuapp.com/login</a> </td></tr>
 </table></td></tr>
 <table><tr><td><em>Grading Link: </em><a rel="noreferrer noopener" href="https://learn.ethereallab.app/homework/IS601-006-S23/is601-milestone1-deliverable/grade/ac298" target="_blank">Grading</a></td></tr></table>
