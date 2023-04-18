@@ -8,6 +8,7 @@ on:
     branches:
       - dev
       - DeploymentSettup-video
+      - Milestone1
 
 # Your workflows jobs.
 jobs:
@@ -17,7 +18,7 @@ jobs:
       DB_URL: ${{secrets.DB_URL}}
       PORT: 8080
       # change to the project directory you're deploying
-      WORKING_DIRECTORY: flask_sample
+      WORKING_DIRECTORY: Final_Project
     defaults:
       run:
           working-directory: ${{env.WORKING_DIRECTORY}}
