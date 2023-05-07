@@ -8,6 +8,7 @@ on:
     branches:
       - dev
       - DeploymentSettup-video
+      - Milestone2
       # - Milestone1
 
 # Your workflows jobs.
