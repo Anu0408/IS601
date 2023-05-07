@@ -1,5 +1,5 @@
 import pytest
-
+# pytest flask_sample -rA gives detailed output including print statements
 
 
 @pytest.fixture()
@@ -14,6 +14,7 @@ def app():
     # note: this will likely still trigger auto_increment
     DB.insertOne("INSERT INTO IS601_Sample (id, name, val) VALUES (-1, 'tc','tcval')")
     # other setup can go here
+    # update: id is not AUTO INCREMENTING
 
     yield app
 
